@@ -3,6 +3,8 @@ import { motion } from "framer-motion";
 import { ArrowLeft, Send, Bot, Sparkles, Mic } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import BottomNav from "@/components/BottomNav";
+const API_BASE = "https://adrishyaai.onrender.com";
+
 
 type ChatMessage = {
   id: number;
@@ -38,21 +40,21 @@ const Legal = () => {
 
   // 🔹 Hindi Translation
   const translateToHindi = async (text: string) => {
-    try {
-      const res = await fetch("http://localhost:5000/translate", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ text }),
-      });
+  try {
+    const res = await fetch(`${API_BASE}/translate`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ text }),
+    });
 
-      if (!res.ok) return "";
+    if (!res.ok) return "";
 
-      const data = await res.json();
-      return data.translatedText || "";
-    } catch {
-      return "";
-    }
-  };
+    const data = await res.json();
+    return data.translatedText || "";
+  } catch {
+    return "";
+  }
+};
 
   // 🎤 Voice to Text Function
   const startListening = () => {
@@ -102,7 +104,7 @@ const Legal = () => {
     setLoading(true);
 
     try {
-      const response = await fetch("http://localhost:5000/chat", {
+      const response = await fetch(`${API_BASE}/chat`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ message: text }),
