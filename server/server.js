@@ -6,7 +6,7 @@ const multer = require("multer");
 const cors = require("cors");
 const path = require("path");
 const fs = require("fs");
-const fetch = require("node-fetch");
+//const fetch = require("node-fetch");
 const { createClient } = require("@supabase/supabase-js");
 
 const app = express();
@@ -18,13 +18,21 @@ const PORT = process.env.PORT || 5000;
 // Secure CORS for production
 app.use(
   cors({
-    origin: [
-      "https://adrishya-ai.vercel.app",
-      "http://localhost:8080"
-    ],
+    origin: function (origin, callback) {
+      if (
+        !origin ||
+        origin.includes("vercel.app") ||
+        origin.includes("localhost")
+      ) {
+        callback(null, true);
+      } else {
+        callback(new Error("Not allowed by CORS"));
+      }
+    },
     credentials: true,
   })
 );
+
 
 
 app.use(express.json({ limit: "10mb" }));
