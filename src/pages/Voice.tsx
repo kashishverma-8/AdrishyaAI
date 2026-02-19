@@ -3,6 +3,8 @@ import { motion } from "framer-motion";
 import { ArrowLeft, Mic } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import BottomNav from "@/components/BottomNav";
+const API_BASE = "https://adrishyaai.onrender.com";
+
 
 const languages = ["Hindi", "English", "Regional"];
 
@@ -88,7 +90,7 @@ const Voice = () => {
       formData.append("location", "Village Area");
       formData.append("anonymous", "true");
 
-      const res = await fetch("http://localhost:5000/api/report", {
+      const res = await fetch(`${API_BASE}/api/report`, {
         method: "POST",
         body: formData,
       });
