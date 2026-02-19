@@ -37,21 +37,25 @@ const Chat = () => {
   /* ================= HINDI TRANSLATION ================= */
 
   const translateToHindi = async (text: string) => {
-    try {
-      const res = await fetch("http://localhost:5000/translate", {
+  try {
+    const res = await fetch(
+      "https://adrishyaai.onrender.com/translate",
+      {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ text }),
-      });
+      }
+    );
 
-      if (!res.ok) return "";
+    if (!res.ok) return "";
 
-      const data = await res.json();
-      return data.translatedText || "";
-    } catch {
-      return "";
-    }
-  };
+    const data = await res.json();
+    return data.translatedText || "";
+  } catch {
+    return "";
+  }
+};
+
 
   /* ================= VOICE INPUT ================= */
 
@@ -107,7 +111,7 @@ const Chat = () => {
 
     try {
       const response = await fetch(
-        "http://localhost:5000/chat-volunteer",
+        "https://adrishyaai.onrender.com/chat-volunteer",
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
