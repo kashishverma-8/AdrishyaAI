@@ -1,5 +1,7 @@
 // Home.tsx - Hero: PERFECT GLASSMorphism + MAX Background Visibility
 import { motion } from "framer-motion";
+
+
 import {
   FileText,
   Mic,
@@ -20,6 +22,8 @@ import {
 import { useNavigate } from "react-router-dom";
 import { useRef, useState, useEffect, ReactElement } from "react";
 import { useLanguage } from "../LanguageContext";
+
+
 import SOSButton from "../components/SOSButton";
 
 const stats: {
@@ -168,6 +172,8 @@ const Home = () => {
   const impactRef = useRef<HTMLDivElement>(null);
   const [isTakeActionOpen, setIsTakeActionOpen] = useState(false);
   const [isLanguageOpen, setIsLanguageOpen] = useState(false);
+    const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+
 
   const scrollToSection = (ref: React.RefObject<HTMLDivElement>) => {
     ref.current?.scrollIntoView({ behavior: "smooth" });
@@ -531,11 +537,45 @@ const Home = () => {
       </footer>
       <SOSButton />
       
-      <button className="lg:hidden fixed top-20 right-6 p-4 bg-emerald-600/95 backdrop-blur-xl rounded-full z-50 shadow-2xl border-2 border-white/20 hover:scale-110 transition-all duration-200">
+      <button
+  onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+  className="lg:hidden fixed top-20 right-6 p-4 bg-emerald-600/95 backdrop-blur-xl rounded-full z-[9999] shadow-2xl border-2 border-white/20"
+>
+
         <svg className="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
         </svg>
       </button>
+      {isMobileMenuOpen && (
+  <div className="lg:hidden fixed inset-0 bg-black/95 backdrop-blur-xl z-[9998] flex flex-col items-center justify-center gap-8 text-xl font-semibold text-white">
+
+    <button onClick={() => { scrollToSection(featuresRef); setIsMobileMenuOpen(false); }}>
+      {currentData.nav.features}
+    </button>
+
+    <button onClick={() => { scrollToSection(howRef); setIsMobileMenuOpen(false); }}>
+      {currentData.nav.howItWorks}
+    </button>
+
+    <button onClick={() => { navigate("/report"); setIsMobileMenuOpen(false); }}>
+      {currentData.nav.report}
+    </button>
+
+    <button onClick={() => { navigate("/voice"); setIsMobileMenuOpen(false); }}>
+      {currentData.nav.voice}
+    </button>
+
+    <button onClick={() => { navigate("/legal"); setIsMobileMenuOpen(false); }}>
+      {currentData.nav.rights}
+    </button>
+
+    <button onClick={() => { navigate("/impact"); setIsMobileMenuOpen(false); }}>
+      {currentData.nav.impactStory}
+    </button>
+
+  </div>
+)}
+
     </div>
   );
 };
